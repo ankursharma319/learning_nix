@@ -16,19 +16,3 @@ Can also do something like this
 nix-shell default.nix
 python3 myapp.py
 ```
-
-## Ad hoc environment
-
-nix-shell -p gitMinimal vim nano joe
-
-nix-shell -p 'python38.withPackages (packages: [ packages.django ])'
-
--p is for nix packages
-
-To list available packages with name git for e.g.
-nix-env -qaP git
-nix-env --query --attr-path --available git
-
-### A fully pure (reproducible by others on other machines) environment
-
-nix-shell --pure -p git -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/82b5f87fcc710a99c47c5ffe441589807a8202af.tar.gz

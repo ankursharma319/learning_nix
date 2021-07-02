@@ -1,0 +1,12 @@
+packages: haskell4nix.cabal
+verbose: 3
+
+package haskell4nix
+  tests: True
+  run-tests: False
+  benchmarks: False
+  optimization: False
+  profiling: False
+  coverage: False
+  documentation: True
+  ghc-options: -haddock
