@@ -19,8 +19,10 @@ pkgs.stdenv.mkDerivation {
     pkgs.ghcid
   ];
   shellHook = ''
-  echo "executing my shell hook"
-  export CABAL_DIR="$PWD/tmp_cabal_dir/"
+  echo "generating local cabal config without hackage remote repository"
+  export CABAL_DIR="$PWD/_cabal_work/"
   export CABAL_CONFIG="$CABAL_DIR/config"
+  cabal user-config init --force
+  sed --in-place '/hackage/d' $CABAL_CONFIG
   '';
 }
