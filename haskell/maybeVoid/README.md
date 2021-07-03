@@ -14,7 +14,7 @@ ghcWithPackages downloads the packages and adds the packages to GHC’s include 
 
 (This is very similar to the git_project0)
 
-nix-shell --pure -p ghc cabal-install --run "cabal init"
+nix-shell --pure -p ghc cabal-install --run "cabal init --interactive"
 
 nix-shell --pure -p cabal2nix --run "cabal2nix ." > exampleDerivation.nix
 

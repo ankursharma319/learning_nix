@@ -20,7 +20,7 @@ pkgs.stdenv.mkDerivation {
   ];
   shellHook = ''
   echo "generating local cabal config without hackage remote repository"
-  export CABAL_DIR="$PWD/_cabal_work/"
+  export CABAL_DIR="$PWD/_cabal_work"
   export CABAL_CONFIG="$CABAL_DIR/config"
   cabal user-config init --force
   sed --in-place '/hackage/d' $CABAL_CONFIG
