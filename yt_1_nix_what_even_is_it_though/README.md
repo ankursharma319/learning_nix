@@ -28,7 +28,7 @@ xcdr.... is "basically" hash of its contents
 Nix store is a graph database. Can be queried.
 
 ```
-nix-store --query --references nix-store --query --references /nix/store/66fbv9mmx1j4hrn9y06kcp73c3yb196r-python3-3.8.9/
+nix-store --query --references /nix/store/66fbv9mmx1j4hrn9y06kcp73c3yb196r-python3-3.8.9/
 ```
 
 This will list dependencies of the "runtime" package python3-3.8.9 
