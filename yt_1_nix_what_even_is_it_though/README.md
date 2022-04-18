@@ -13,7 +13,7 @@ https://www.youtube.com/watch?v=6iVXaqUfHi4
 3. Sandbox
 4. Language
 
-## Nix Store
+# Nix Store
 
 - `/nix/store` - is a graph
 - `/nix/store/*` - immutable (contents wont change) nodes
@@ -39,7 +39,13 @@ To list the "build" dependencies of this package query the drv (derivation) file
 nix-store --query --references /nix/store/qps9k35634y3f02msnyp5csqha6rmm82-python3-3.8.9.drv
 ```
 
-## Derivation
+## Sharing nix store
+
+Possible to 
+- import and export closures as .closure files
+- serve a nix store as a cache similar to https://cache.nixos.org/ (via http or via ssh)
+
+# Derivation
 
 - Special entries in the nix store.
 - describe instructions to build other entries in the nix store
@@ -69,14 +75,40 @@ this only creates a `/nix/store/...-demo` file with contents "hello world" when 
 
 ![](derivation_out.png)
 
-## Sandbox
+
+If want to contribute a package to the nixpkgs, then should add the derivation to the all-packages.nix in the clone of the nixpkgs and make a pull request.
+
+If just want to have a package locally installed, recommended way is add it as an overlay (more info in nixpkgs manual)
+
+If just want to have derivation for building/developing some local project but dont want to install it as package, just keep the derivation as a standalone file in your code and use `nix-build` (can also do `nix-env --install --file ./derivation.nix` if you do want to install it and have the binary added to the PATH but the main point is that the derivation doesnt need to be part of nixpkgs or overlays)
+
+## derivation function
+
+There must be an attribute named builder that identifies the program that is executed to perform the build. It can be either a derivation or a source (a local file reference, e.g., ./builder.sh). The default builder in mkDerivation has this content:
+
+```
+source $stdenv/setup
+genericBuild
+```
+
+Every attribute in the derivation is passed as an environment variable to the builder. E.g. - `$name`, `$out`.
+ - Strings and numbers are just passed verbatim.
+ - true is passed as the string 1, false and null are passed as an empty string.
+ - A path (e.g., ../foo/sources.tar) causes the referenced file to be copied to the store; its location in the store is put in the environment variable. The idea is that all sources should reside in the Nix store, since all inputs to a derivation should reside in the Nix store.
+ - A derivation causes that derivation to be built prior to the present derivation; its default output path is put in the environment variable.
+ - Lists are simply concatenated, separated by spaces.
+
+## Verifying build reproducibility
+
+https://nixos.org/manual/nix/unstable/advanced-topics/diff-hook.html
+# Sandbox
 
 - Only things mentioned in the derivation are available during build.
 - Implementation of sandboxing varies by platform
 - There is no thing as implicit dependency in nix
 - You can literally a copy a nix store closure from one machine to other (as long as the platform is same) and it will run the same
 
-## Nix Language
+# Nix Language
 
  - lazy evaluation
  - free of side effects (no networking, IO, file writing, use input etc., doesnt actually do anything)

@@ -48,6 +48,8 @@ https://nixos.org/channels/nixpkgs-21.05-darwin nixpkgs-21.05-darwin
 
 and run `nix-channel --update` and we should see new directory `~/.nix-defexpr/nixpkgs-21.05-darwin`
 
+In order to upgrade packages also (if they are updated in the new updated channel) - can run `nix-env -iA nixpkgs.<pkgname>` again individually or upgrade all pkgs by running `nix-env -u '*'`
+
 Changing the channel in a nix derivation and rebuilding it would fetch and build new entries in nix store for its dependencies.
 
 To get fully reproducebile builds, its recommended to not use channels like this anymore.
