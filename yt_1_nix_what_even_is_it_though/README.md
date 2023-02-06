@@ -96,6 +96,7 @@ Every attribute in the derivation is passed as an environment variable to the bu
  - true is passed as the string 1, false and null are passed as an empty string.
  - A path (e.g., ../foo/sources.tar) causes the referenced file to be copied to the store; its location in the store is put in the environment variable. The idea is that all sources should reside in the Nix store, since all inputs to a derivation should reside in the Nix store.
  - A derivation causes that derivation to be built prior to the present derivation; its default output path is put in the environment variable.
+ - e.g. adding the cmake derivation imported from the nixpkgs as a new key:value pair in derivation function will make it available in the builder as env var `$cmake`. https://nixos.org/guides/nix-pills/working-derivation.html
  - Lists are simply concatenated, separated by spaces.
 
 ## Verifying build reproducibility
