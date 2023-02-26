@@ -8,6 +8,7 @@ https://www.youtube.com/watch?v=oWJaTb5uoT0
 
 It is simply a big attribute set with keys being name of the package and the value being the derivation.
 
+
 derivation is the only function in nix language which has a sideffect (writes a .drv file).
 
 ## Part 2
@@ -29,6 +30,11 @@ The standard library : builtins namespace (https://nixos.org/manual/nix/unstable
 There is a lib folder in nixpkgs with additional functions. So if you import `<nixpkgs>`, you can use them as `pkgs.lib.singleton` for example
 
 ## Part 4 - Channels and NIX_PATH
+
+nix-build and nix-shell will use NIX_PATH environment variable if `<nixpkgs>` is used. But nix-env is a bit more clever and does not need the NIX_PATH env variable to be set.
+See https://nixos.org/guides/nix-pills/nix-search-paths.html#idm140737319729232
+
+nix-env looks in `~/.nix-defexpr/channels` and if no channel by name nixpkgs is added, it looks in `/nix/var/nix/profiles/per-user/root/channels`.
 
 In `~/.nix-channels` , the channels are specifed. For me its currently :
 
