@@ -62,6 +62,8 @@ or this for string arg -
 
 Can use `--json` flag to get generic output
 
+nix-build is essentially a wrapper around nix-instantiate (to translate a high-level Nix expression to a low-level store derivation, including producing .drv files in nix store) and nix-store --realise (to build the store derivation).
+
 ```
 { input? "default" }:
 let

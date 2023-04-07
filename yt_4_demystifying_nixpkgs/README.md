@@ -31,10 +31,21 @@ There is a lib folder in nixpkgs with additional functions. So if you import `<n
 
 ## Part 4 - Channels and NIX_PATH
 
-nix-build and nix-shell will use NIX_PATH environment variable if `<nixpkgs>` is used. But nix-env is a bit more clever and does not need the NIX_PATH env variable to be set.
+NIX_PATH env var is old news (but can still be set to manually specify nixpkgs path to a cmd like nix-shell or nix-build for example).
 See https://nixos.org/guides/nix-pills/nix-search-paths.html#idm140737319729232
 
-nix-env looks in `~/.nix-defexpr/channels` and if no channel by name nixpkgs is added, it looks in `/nix/var/nix/profiles/per-user/root/channels`.
+If not set, cmds like nix-env looks in `~/.nix-defexpr/channels` and if no channel by name nixpkgs is added, it looks in `/nix/var/nix/profiles/per-user/root/channels`.
+
+This is what it looks for me if i have no nixpkgs channel
+
+```
+$ nix-instantiate --eval -E '<nixpkgs>'
+/nix/var/nix/profiles/per-user/root/channels/nixpkgs
+```
+
+When using -p option in nix-shell like `nix-shell -p some_input`, it searches for <nixpkgs> using the above rules.
+To be more explicit about which nixpkgs version to use, can use `-I nixpkgs=https://github.com/NixOS/nixpkgs/archive/8a3eea054838b55aca962c3fbde9c83c102b8bf2.tar.gz`
+To use nix-shell with different channel name, need to use flakes and nix develop cmds.
 
 In `~/.nix-channels` , the channels are specifed. For me its currently :
 
