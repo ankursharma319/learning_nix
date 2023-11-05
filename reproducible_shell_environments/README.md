@@ -26,3 +26,9 @@ nix-env --query --attr-path --available git
 ### A fully pure (reproducible by others on other machines) environment
 
 nix-shell --pure -p git -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/82b5f87fcc710a99c47c5ffe441589807a8202af.tar.gz
+
+### new nix commands
+
+`nix develop` replaces the `nix-shell shell.nix` and is meant to be used for dev environments.
+`nix shell` replaces `nix-shell -p gitMinimal` type commands which are used to provision software temporarily.
+
